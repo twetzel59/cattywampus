@@ -1,0 +1,52 @@
+# depslib dependency file v1.0
+1570134481 source:/home/trevor/Projects/cattywampus/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"value.h"
+
+1570133418 /home/trevor/Projects/cattywampus/value.h
+	<stdint.h>
+	"option.h"
+	"str.h"
+
+1570132444 source:/home/trevor/Projects/cattywampus/value.c
+	"value.h"
+
+1570132984 source:/home/trevor/Projects/cattywampus/alloc.c
+	"alloc.h"
+	<assert.h>
+	<stdlib.h>
+
+1570129633 /home/trevor/Projects/cattywampus/alloc.h
+	<string.h>
+
+1570130315 /home/trevor/Projects/cattywampus/string.h
+	<assert.h>
+	<stdint.h>
+
+1570130335 source:/home/trevor/Projects/cattywampus/string.c
+	"string.h"
+	"alloc.h"
+
+1570132352 source:/home/trevor/Projects/cattywampus/str.c
+	"str.h"
+	<stdarg.h>
+	<stdio.h>
+	"alloc.h"
+
+1570131646 /home/trevor/Projects/cattywampus/str.h
+	<assert.h>
+	<stdint.h>
+
+1570134473 /home/trevor/Projects/cattywampus/option.h
+	<assert.h>
+	<stdbool.h>
+
+1570134296 source:/home/trevor/Projects/cattywampus/stack.c
+	"stack.h"
+
+1570133697 /home/trevor/Projects/cattywampus/stack.h
+	<stdbool.h>
+	"value.h"
+
