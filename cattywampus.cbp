@@ -49,6 +49,11 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="option.h" />
+		<Unit filename="stack.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="stack.h" />
 		<Unit filename="str.c">
 			<Option compilerVar="CC" />
 		</Unit>
