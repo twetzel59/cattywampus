@@ -1,10 +1,10 @@
 # Tiny concatenative, stack-based calculator and evaluator
 
-This is currently non-interactive, but will soon feature a stack-based calculator on the command line.
+Currently being rewritten in Rust.
 
-I eventually would like to expand this to include a full interpreter for programs written in the concanative stack language, but that's iffy.
-
-# Running
-If you have Code::Blocks, just open the project and it *should* work. If not, make sure you are using a fairly new GCC.
-
-**The standard is C11!**, so make sure you use a compliant compiler.
+I'm currently busy with school, but I hope to make this a fairly advanced calculator (in the form of a stack language interpreter) with the following features:
+* Basic arithmetic
+* Math functions
+* String functions
+* Saving and loading programs
+* Very strong (albeit dynamic) type checking
