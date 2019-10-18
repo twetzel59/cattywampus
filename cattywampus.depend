@@ -1,9 +1,11 @@
 # depslib dependency file v1.0
-1570134481 source:/home/trevor/Projects/cattywampus/main.c
+1570135085 source:/home/trevor/Projects/cattywampus/main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"value.h"
+	"stack.h"
+	"str.h"
 
 1570133418 /home/trevor/Projects/cattywampus/value.h
 	<stdint.h>
@@ -35,7 +37,7 @@
 	<stdio.h>
 	"alloc.h"
 
-1570131646 /home/trevor/Projects/cattywampus/str.h
+1570236239 /home/trevor/Projects/cattywampus/str.h
 	<assert.h>
 	<stdint.h>
 
@@ -43,7 +45,7 @@
 	<assert.h>
 	<stdbool.h>
 
-1570134296 source:/home/trevor/Projects/cattywampus/stack.c
+1570135126 source:/home/trevor/Projects/cattywampus/stack.c
 	"stack.h"
 
 1570133697 /home/trevor/Projects/cattywampus/stack.h

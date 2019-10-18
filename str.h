@@ -32,9 +32,9 @@ typedef struct {
 //
 // It should be used as a unique pointer.
 //
-// The ref field may be read, but should
-// and must only be written to when the
-// StrRef is unique (i.e. not borrowed)!
+// The ref field may be read, but must
+// only be written to when the StrRef is
+// unique (i.e. not borrowed)!
 typedef struct {
     StrRef ref;
 } Str;
