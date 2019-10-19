@@ -9,15 +9,18 @@ use std::fmt;
 /// Represents a single value on the calculator stack
 #[derive(Debug)]
 pub enum Value {
-    Integer32(i32),
-    Float32(f32),
+    /// A 32-bit signed integer
+    Int32(i32),
+    
+    /// A 64-bit floating point number
+    Float64(f64),
 }
 
 impl fmt::Display for Value {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Value::Integer32(x) => write!(f, "{}", x),
-            Value::Float32(x) => write!(f, "{}", x),
+            Value::Int32(x) => write!(f, "{}", x),
+            Value::Float64(x) => write!(f, "{}", x),
         }
     }
 }

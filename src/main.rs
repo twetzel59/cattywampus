@@ -24,7 +24,7 @@ fn repl() {
             return;
         } 
         
-        println!("{:?}", parser::find_tokens(&input));
+        println!("{:?}", parser::parse_line(&input).collect::<Vec<_>>());
         
         buf.clear();
     }

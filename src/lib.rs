@@ -1,4 +1,4 @@
-//! cattywampus
+//! ## cattywampus
 //!
 //! This is the root library crate for the cattywampus stack
 //! calculator and mini-language.
