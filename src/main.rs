@@ -4,7 +4,6 @@ use cattywampus::{
     value::Value,
 };
 use editline;
-use std::io::{self, BufRead, BufReader};
 
 fn main() {
     repl();
@@ -28,6 +27,8 @@ fn repl() {
         }
 
         let parsed_tokens = parser::parse_line(input).collect::<Vec<_>>();
+        
+        println!("{:?}", parsed_tokens.iter().map(|(_, parsed_tok)| parsed_tok).collect::<Vec<_>>());
 
         // First, verify the input.
         let mut invalid = false;
@@ -42,7 +43,7 @@ fn repl() {
             for (_, parsed_tok) in parsed_tokens {
                 match parsed_tok {
                     ParsedToken::Literal(val) => stack.push(val),
-                    ParsedToken::Intrinsic => unreachable!(),
+                    ParsedToken::Intrinsic(fun) => println!("{}", fun.name),
                     ParsedToken::BadToken => unreachable!(), // Bad tokens are handled above.
                 }
             }

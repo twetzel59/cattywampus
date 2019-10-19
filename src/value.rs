@@ -6,6 +6,28 @@
 
 use std::fmt;
 
+/// Stores a type without a concrete value
+///
+/// For now, these correlate directly to the
+/// ``Value`` constructors, but in the future,
+/// there may be more than one ``Type`` per
+/// ``Value``. For example, more specific
+/// types could be defined that mandate that
+/// an integer is zonzero or a that a real is
+/// in a certain range.
+///
+/// Types are unit for now, but may eventually
+/// themselves be parameterized to allow for
+/// generics.
+#[derive(Debug, PartialEq)]
+pub enum Type {
+    /// The most general ``Int32``
+    AnyInt32,
+    
+    /// The most general ``Float64``
+    AnyFloat64,
+}
+
 /// Represents a single value on the calculator stack
 #[derive(Debug, PartialEq)]
 pub enum Value {

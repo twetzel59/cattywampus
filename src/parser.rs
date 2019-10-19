@@ -4,14 +4,17 @@
 //! of string input at a time, but could be expanded to process
 //! files.
 
-use super::value::Value;
+use super::{
+    functions::{BuiltinFun, INTRINSIC_FNS},
+    value::Value,
+};
 use lazy_static::lazy_static;
 use regex::RegexSet;
 use std::str::FromStr;
 
-// The patterns that represent different value literals
 #[rustfmt::skip]
 lazy_static! {
+    // The patterns that represent different value literals
     static ref VALUE_LITERALS: RegexSet = RegexSet::new(&[
         r"^-?((\d+\.\d*)|(\d*\.\d+))$", // Float64 literal
         r"^-?\d+$",                     // Int32 literal
@@ -29,7 +32,7 @@ pub enum ParsedToken {
     Literal(Value),
 
     /// Results from parsing a builtin function
-    Intrinsic,
+    Intrinsic(&'static BuiltinFun),
 
     /// Results from a failed parse
     BadToken,
@@ -56,7 +59,10 @@ fn analyze_token(token: &str) -> ParsedToken {
     } else if matches.iter().any(|idx| idx == INT32_LITERAL_IDX) {
         parse_int32(token)
     } else {
-        ParsedToken::BadToken
+        match INTRINSIC_FNS.get(token) {
+            Some(fun) => ParsedToken::Intrinsic(fun),
+            None => ParsedToken::BadToken,
+        }
     }
 }
 
