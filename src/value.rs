@@ -11,7 +11,7 @@ use std::fmt;
 pub enum Value {
     /// A 32-bit signed integer
     Int32(i32),
-    
+
     /// A 64-bit floating point number
     Float64(f64),
 }

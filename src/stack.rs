@@ -20,13 +20,13 @@ impl Stack {
             elements: Vec::new(),
         }
     }
-    
+
     /// Push a ``Value`` onto the stack,
     /// making it the top element.
     pub fn push(&mut self, val: Value) {
         self.elements.push(val);
     }
-    
+
     /// Push the series of ``Values`` onto
     /// the stack, making them the highest
     /// elements.
@@ -37,7 +37,7 @@ impl Stack {
     pub fn extend(&mut self, values: Vec<Value>) {
         self.elements.extend(values);
     }
-    
+
     /// Tries to pop a ``Value`` off the
     /// stack and return it.
     ///
