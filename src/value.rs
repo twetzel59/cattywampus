@@ -23,7 +23,7 @@ use std::fmt;
 pub enum Type {
     /// The most general ``Int32``
     AnyInt32,
-    
+
     /// The most general ``Float64``
     AnyFloat64,
 }
@@ -36,6 +36,20 @@ pub enum Value {
 
     /// A 64-bit floating point number
     Float64(f64),
+}
+
+impl Value {
+    /// Returns ``true`` if the ``Value`` can be treated
+    /// as the specified ``Type``.
+    pub fn matches(&self, candiate: &Type) -> bool {
+        use Type::*;
+        use Value::*;
+
+        match self {
+            Int32(_) => *candiate == AnyInt32,
+            Float64(_) => *candiate == AnyFloat64,
+        }
+    }
 }
 
 impl fmt::Display for Value {

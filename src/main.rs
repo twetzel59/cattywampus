@@ -1,7 +1,7 @@
 use cattywampus::{
     parser::{self, ParsedToken},
     stack::Stack,
-    value::Value,
+    typecheck,
 };
 use editline;
 
@@ -22,13 +22,25 @@ fn repl() {
         if input == ":p" {
             println!("{:?}", stack);
             continue;
+        } else if input == ":r" {
+            stack.clear();
+
+            println!("Stack cleared.");
+            continue;
         } else if input == ":q" {
             return;
         }
 
         let parsed_tokens = parser::parse_line(input).collect::<Vec<_>>();
-        
-        println!("{:?}", parsed_tokens.iter().map(|(_, parsed_tok)| parsed_tok).collect::<Vec<_>>());
+
+        // Just for debugging.
+        println!(
+            "{:?}",
+            parsed_tokens
+                .iter()
+                .map(|(_, parsed_tok)| parsed_tok)
+                .collect::<Vec<_>>()
+        );
 
         // First, verify the input.
         let mut invalid = false;
@@ -43,7 +55,11 @@ fn repl() {
             for (_, parsed_tok) in parsed_tokens {
                 match parsed_tok {
                     ParsedToken::Literal(val) => stack.push(val),
-                    ParsedToken::Intrinsic(fun) => println!("{}", fun.name),
+                    ParsedToken::Intrinsic(fun) => {
+                        if let Err(typ_err) = typecheck::checked_apply(fun, &mut stack) {
+                            println!("Error - {:?}: {:?}", typ_err, fun);
+                        }
+                    }
                     ParsedToken::BadToken => unreachable!(), // Bad tokens are handled above.
                 }
             }

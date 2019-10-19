@@ -4,23 +4,20 @@
 //! implementations, but could eventually support user-
 //! defined lambda closures.
 
-use lazy_static::lazy_static;
 use super::value::{Type, Value};
-use std::{
-    collections::HashMap,
-    fmt,
-};
+use lazy_static::lazy_static;
+use std::{collections::HashMap, fmt};
 
 lazy_static! {
     /// The intrinsic built-in functions supported in the calculator.
     pub static ref INTRINSIC_FNS: HashMap<&'static str, BuiltinFun> = {
         use Type::*;
         use builtins::*;
-        
+
         let mut fns = HashMap::new();
-        
+
         fns.insert("sin", BuiltinFun::new("sine", (&[AnyFloat64], &[AnyFloat64]), sin_impl));
-        
+
         fns
     };
 }
@@ -61,7 +58,8 @@ impl<'a> Function<'a> {
     /// human-readable name, type signiture, and
     /// backing implmentation.
     pub fn new<S>(name: S, signiture: Signiture<'a>, implementation: Implementation) -> Function<'a>
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         Function {
             name: name.into(),
@@ -73,7 +71,11 @@ impl<'a> Function<'a> {
 
 impl<'a> fmt::Debug for Function<'a> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{} :: {:?} -> {:?}", self.name, self.signiture.0, self.signiture.1)
+        write!(
+            f,
+            "{} :: {:?} -> {:?}",
+            self.name, self.signiture.0, self.signiture.1
+        )
     }
 }
 
@@ -84,8 +86,7 @@ impl<'a> fmt::Debug for Function<'a> {
 // Functions with the same name and signiture are assumed to be equal.
 impl<'a> PartialEq for Function<'a> {
     fn eq(&self, other: &Self) -> bool {
-        self.name == other.name &&
-        self.signiture == other.signiture
+        self.name == other.name && self.signiture == other.signiture
     }
 }
 
@@ -97,7 +98,7 @@ pub type BuiltinFun = Function<'static>;
 mod builtins {
     use super::FunctionResult::{self, *};
     use crate::value::Value;
-    
+
     pub fn sin_impl(args: &[Value]) -> FunctionResult {
         Scalar(Value::Float64(match args {
             [Value::Float64(x)] => x.sin(),

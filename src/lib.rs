@@ -6,4 +6,5 @@
 pub mod functions;
 pub mod parser;
 pub mod stack;
+pub mod typecheck;
 pub mod value;

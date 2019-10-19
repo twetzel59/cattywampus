@@ -22,6 +22,43 @@ impl Stack {
         }
     }
 
+    /// Return the current height of the
+    /// stack, or how many elements it has.
+    pub fn height(&self) -> usize {
+        self.elements.len()
+    }
+
+    /// Return the element ``n`` places from
+    /// the top of the stack. Panics if the
+    /// provided n runs off the stack.
+    pub fn peek_n(&self, n: usize) -> &Value {
+        let len = self.elements.len();
+        &self.elements[len - n - 1]
+    }
+
+    /// Return a slice starting ``n`` places
+    /// from the top of stack. Panics if the
+    /// provided n runs off the stack.
+    pub fn slice_n(&self, n: usize) -> &[Value] {
+        let len = self.elements.len();
+        &self.elements[(len - n - 1)..]
+    }
+
+    /// Remove and drop the last ``n``
+    /// elements. Panics if the provided ``n``
+    /// runs off the stack.
+    pub fn chop_n(&mut self, n: usize) {
+        let len = self.elements.len();
+        // no ``- 1``, truncate is by count, not index.
+        self.elements.truncate(len - n);
+    }
+
+    /// Reset the stack to completely empty,
+    /// dropping all ``Value``s in the stack.
+    pub fn clear(&mut self) {
+        self.elements.clear();
+    }
+
     /// Push a ``Value`` onto the stack,
     /// making it the top element.
     pub fn push(&mut self, val: Value) {
@@ -50,7 +87,7 @@ impl Stack {
     pub fn pop(&mut self) -> Option<Value> {
         self.elements.pop()
     }
-    
+
     /// Returns an iterator over the items
     /// in the stack, *oldest* first.
     pub fn iter<'a>(&'a self) -> slice::Iter<'a, Value> {
@@ -61,7 +98,7 @@ impl Stack {
 impl<'a> IntoIterator for &'a Stack {
     type Item = &'a Value;
     type IntoIter = slice::Iter<'a, Value>;
-    
+
     fn into_iter(self) -> Self::IntoIter {
         self.iter()
     }
