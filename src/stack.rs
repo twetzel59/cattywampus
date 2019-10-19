@@ -4,6 +4,7 @@
 //! structure for the calculator's emulated stack.
 
 use super::value::Value;
+use std::slice;
 
 /// Represents the virtual stack
 ///
@@ -48,6 +49,21 @@ impl Stack {
     /// is returned.
     pub fn pop(&mut self) -> Option<Value> {
         self.elements.pop()
+    }
+    
+    /// Returns an iterator over the items
+    /// in the stack, *oldest* first.
+    pub fn iter<'a>(&'a self) -> slice::Iter<'a, Value> {
+        (&self.elements).into_iter()
+    }
+}
+
+impl<'a> IntoIterator for &'a Stack {
+    type Item = &'a Value;
+    type IntoIter = slice::Iter<'a, Value>;
+    
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
     }
 }
 

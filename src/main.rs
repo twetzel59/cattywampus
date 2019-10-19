@@ -14,13 +14,7 @@ fn repl() {
     let mut stack = Stack::new();
 
     loop {
-        let line = match editline::readline("> ") {
-            Some(l) => l,
-            None => {
-                println!("none!");
-                "test"
-            }
-        };
+        let line = editline::readline("> ").unwrap();
 
         editline::add_history(line);
 
@@ -49,7 +43,7 @@ fn repl() {
                 match parsed_tok {
                     ParsedToken::Literal(val) => stack.push(val),
                     ParsedToken::Intrinsic => unreachable!(),
-                    ParsedToken::BadToken => unreachable!(),
+                    ParsedToken::BadToken => unreachable!(), // Bad tokens are handled above.
                 }
             }
 
@@ -59,5 +53,9 @@ fn repl() {
 }
 
 fn print_stack(stack: &Stack) {
-    //println!("{}");
+    for i in stack {
+        print!("{} ", i);
+    }
+
+    println!("");
 }
