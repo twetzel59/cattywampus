@@ -23,7 +23,7 @@ const FLOAT64_LITERAL_IDX: usize = 0;
 const INT32_LITERAL_IDX: usize = 1;
 
 /// The result of parsing a token
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum ParsedToken {
     /// Results from parsing a ``Value`` literal
     Literal(Value),
@@ -35,11 +35,13 @@ pub enum ParsedToken {
     BadToken,
 }
 
-/// Parse a single line of input
+/// Parse a single line of input, returning
+/// both the string tokens and their parsed
+/// values, if they were valid.
 ///
 /// It is assumed that the input does not contain any newlines.
-pub fn parse_line<'a>(line: &'a str) -> impl Iterator<Item = ParsedToken> + 'a {
-    split_tokens(line).map(analyze_token)
+pub fn parse_line<'a>(line: &'a str) -> impl Iterator<Item = (&str, ParsedToken)> + 'a {
+    split_tokens(line).map(|token| (token, analyze_token(token)))
 }
 
 fn split_tokens(line: &str) -> impl Iterator<Item = &str> {

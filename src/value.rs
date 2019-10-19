@@ -7,7 +7,7 @@
 use std::fmt;
 
 /// Represents a single value on the calculator stack
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Value {
     /// A 32-bit signed integer
     Int32(i32),
