@@ -70,9 +70,30 @@ fn repl() {
 }
 
 fn print_stack(stack: &Stack) {
+    let mut types = String::new();
+    let mut values = String::new();
+    
     for i in stack {
-        print!("{} ", i);
+        let type_repr = i.type_str();
+        let val_repr = i.to_string();
+        
+        let max_length = type_repr.len().max(val_repr.len()) + 1;
+        
+        make_entry(&mut types, type_repr, max_length);
+        make_entry(&mut values, &val_repr, max_length);
     }
 
-    println!("");
+    println!("{}\n{}", types, values);
+}
+
+fn make_entry(result: &mut String, repr: &str, max_length: usize) {
+    const SPACE: &str = " ";
+    const CELL: &str = "|";
+    
+    *result += SPACE;
+    *result += repr;
+    for _ in 0..(max_length - repr.len()) {
+        *result += SPACE;
+    }
+    *result += CELL;
 }

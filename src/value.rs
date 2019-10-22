@@ -50,6 +50,15 @@ impl Value {
             Float64(_) => *candiate == AnyFloat64,
         }
     }
+    
+    /// Returns a string representation of the ``Value``'s
+    /// type.
+    pub fn type_str(&self) -> &str {
+        match self {
+            Value::Int32(_) => "Int32",
+            Value::Float64(_) => "Float64",
+        }
+    }
 }
 
 impl fmt::Display for Value {

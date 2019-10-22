@@ -16,7 +16,29 @@ lazy_static! {
 
         let mut fns = HashMap::new();
 
-        fns.insert("sin", BuiltinFun::new("sine", (&[AnyFloat64], &[AnyFloat64]), sin_impl));
+        // Algebraic
+        fns.insert("recip", BuiltinFun::new("recip", (&[AnyFloat64], &[AnyFloat64]), recip_impl));
+        fns.insert("sqrt", BuiltinFun::new("sqrt", (&[AnyFloat64], &[AnyFloat64]), sqrt_impl));
+        fns.insert("cbrt", BuiltinFun::new("cbrt", (&[AnyFloat64], &[AnyFloat64]), cbrt_impl));
+
+        // Exponential & Logarithmic
+        fns.insert("exp", BuiltinFun::new("exp", (&[AnyFloat64], &[AnyFloat64]), exp_impl));
+        fns.insert("ln",  BuiltinFun::new("ln",  (&[AnyFloat64], &[AnyFloat64]), ln_impl));
+
+        // Trigonometry
+        fns.insert("sin", BuiltinFun::new("sin", (&[AnyFloat64], &[AnyFloat64]), sin_impl));
+        fns.insert("cos", BuiltinFun::new("cos", (&[AnyFloat64], &[AnyFloat64]), cos_impl));
+        fns.insert("tan", BuiltinFun::new("tan", (&[AnyFloat64], &[AnyFloat64]), tan_impl));
+
+        // Trigonometry - reciprocals
+        fns.insert("csc", BuiltinFun::new("csc", (&[AnyFloat64], &[AnyFloat64]), csc_impl));
+        fns.insert("sec", BuiltinFun::new("sec", (&[AnyFloat64], &[AnyFloat64]), sec_impl));
+        fns.insert("cot", BuiltinFun::new("cot", (&[AnyFloat64], &[AnyFloat64]), cot_impl));
+
+        // Trigonometry - principal inverses
+        fns.insert("arcsin", BuiltinFun::new("arcsin", (&[AnyFloat64], &[AnyFloat64]), arcsin_impl));
+        fns.insert("arccos", BuiltinFun::new("arccos", (&[AnyFloat64], &[AnyFloat64]), arccos_impl));
+        fns.insert("arctan", BuiltinFun::new("arctan", (&[AnyFloat64], &[AnyFloat64]), arctan_impl));
 
         fns
     };
@@ -99,9 +121,105 @@ mod builtins {
     use super::FunctionResult::{self, *};
     use crate::value::Value;
 
+    // Algebraic
+    pub fn recip_impl(args: &[Value]) -> FunctionResult {
+        Scalar(Value::Float64(match args {
+            [Value::Float64(x)] => x.recip(),
+            _ => unreachable!(),
+        }))
+    }
+    
+    pub fn sqrt_impl(args: &[Value]) -> FunctionResult {
+        Scalar(Value::Float64(match args {
+            [Value::Float64(x)] => x.sqrt(),
+            _ => unreachable!(),
+        }))
+    }
+    
+    pub fn cbrt_impl(args: &[Value]) -> FunctionResult {
+        Scalar(Value::Float64(match args {
+            [Value::Float64(x)] => x.cbrt(),
+            _ => unreachable!(),
+        }))
+    }
+
+    // Exponential & Logarithmic
+    pub fn exp_impl(args: &[Value]) -> FunctionResult {
+        Scalar(Value::Float64(match args {
+            [Value::Float64(x)] => x.exp(),
+            _ => unreachable!(),
+        }))
+    }
+    
+    pub fn ln_impl(args: &[Value]) -> FunctionResult {
+        Scalar(Value::Float64(match args {
+            [Value::Float64(x)] => x.ln(),
+            _ => unreachable!(),
+        }))
+    }
+
+    // Trigonometry
     pub fn sin_impl(args: &[Value]) -> FunctionResult {
         Scalar(Value::Float64(match args {
             [Value::Float64(x)] => x.sin(),
+            _ => unreachable!(),
+        }))
+    }
+
+    pub fn cos_impl(args: &[Value]) -> FunctionResult {
+        Scalar(Value::Float64(match args {
+            [Value::Float64(x)] => x.cos(),
+            _ => unreachable!(),
+        }))
+    }
+
+    pub fn tan_impl(args: &[Value]) -> FunctionResult {
+        Scalar(Value::Float64(match args {
+            [Value::Float64(x)] => x.tan(),
+            _ => unreachable!(),
+        }))
+    }
+
+    // Trigonometry - reciprocals
+    pub fn csc_impl(args: &[Value]) -> FunctionResult {
+        Scalar(Value::Float64(match args {
+            [Value::Float64(x)] => x.sin().recip(),
+            _ => unreachable!(),
+        }))
+    }
+
+    pub fn sec_impl(args: &[Value]) -> FunctionResult {
+        Scalar(Value::Float64(match args {
+            [Value::Float64(x)] => x.cos().recip(),
+            _ => unreachable!(),
+        }))
+    }
+
+    pub fn cot_impl(args: &[Value]) -> FunctionResult {
+        Scalar(Value::Float64(match args {
+            [Value::Float64(x)] => x.tan().recip(),
+            _ => unreachable!(),
+        }))
+    }
+    
+    // Trigonometry - principal inverses
+    pub fn arcsin_impl(args: &[Value]) -> FunctionResult {
+        Scalar(Value::Float64(match args {
+            [Value::Float64(x)] => x.asin(),
+            _ => unreachable!(),
+        }))
+    }
+
+    pub fn arccos_impl(args: &[Value]) -> FunctionResult {
+        Scalar(Value::Float64(match args {
+            [Value::Float64(x)] => x.acos(),
+            _ => unreachable!(),
+        }))
+    }
+
+    pub fn arctan_impl(args: &[Value]) -> FunctionResult {
+        Scalar(Value::Float64(match args {
+            [Value::Float64(x)] => x.atan(),
             _ => unreachable!(),
         }))
     }
