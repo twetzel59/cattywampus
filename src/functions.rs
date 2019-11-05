@@ -16,6 +16,10 @@ lazy_static! {
 
         let mut fns = HashMap::new();
 
+        // Integer operations
+        fns.insert("inc", BuiltinFun::new("inc", (&[AnyInt32], &[AnyInt32]), inc_impl));
+        fns.insert("dec", BuiltinFun::new("dec", (&[AnyInt32], &[AnyInt32]), dec_impl));
+
         // Algebraic
         fns.insert("recip", BuiltinFun::new("recip", (&[AnyFloat64], &[AnyFloat64]), recip_impl));
         fns.insert("sqrt", BuiltinFun::new("sqrt", (&[AnyFloat64], &[AnyFloat64]), sqrt_impl));
@@ -120,6 +124,21 @@ pub type BuiltinFun = Function<'static>;
 mod builtins {
     use super::FunctionResult::{self, *};
     use crate::value::Value;
+
+    // Integer operations
+    pub fn inc_impl(args: &[Value]) -> FunctionResult {
+        Scalar(Value::Int32(match args {
+            [Value::Int32(x)] => x + 1,
+            _ => unreachable!(),
+        }))
+    }
+    
+    pub fn dec_impl(args: &[Value]) -> FunctionResult {
+        Scalar(Value::Int32(match args {
+            [Value::Int32(x)] => x - 1,
+            _ => unreachable!(),
+        }))
+    }
 
     // Algebraic
     pub fn recip_impl(args: &[Value]) -> FunctionResult {
