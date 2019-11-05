@@ -21,28 +21,28 @@ lazy_static! {
         fns.insert("dec", BuiltinFun::new("dec", (&[Int32], &[Int32]), dec_impl));
 
         // Algebraic
-        fns.insert("recip", BuiltinFun::new("recip", (&[Float64], &[Float64]), recip_impl));
-        fns.insert("sqrt", BuiltinFun::new("sqrt", (&[Float64], &[Float64]), sqrt_impl));
-        fns.insert("cbrt", BuiltinFun::new("cbrt", (&[Float64], &[Float64]), cbrt_impl));
+        fns.insert("recip", BuiltinFun::new("recip", (&[Fractional], &[Fractional]), recip_impl));
+        fns.insert("sqrt", BuiltinFun::new("sqrt", (&[Fractional], &[Fractional]), sqrt_impl));
+        fns.insert("cbrt", BuiltinFun::new("cbrt", (&[Fractional], &[Fractional]), cbrt_impl));
 
         // Exponential & Logarithmic
-        fns.insert("exp", BuiltinFun::new("exp", (&[Float64], &[Float64]), exp_impl));
-        fns.insert("ln",  BuiltinFun::new("ln",  (&[Float64], &[Float64]), ln_impl));
+        fns.insert("exp", BuiltinFun::new("exp", (&[Fractional], &[Fractional]), exp_impl));
+        fns.insert("ln",  BuiltinFun::new("ln",  (&[Fractional], &[Fractional]), ln_impl));
 
         // Trigonometry
-        fns.insert("sin", BuiltinFun::new("sin", (&[Float64], &[Float64]), sin_impl));
-        fns.insert("cos", BuiltinFun::new("cos", (&[Float64], &[Float64]), cos_impl));
-        fns.insert("tan", BuiltinFun::new("tan", (&[Float64], &[Float64]), tan_impl));
+        fns.insert("sin", BuiltinFun::new("sin", (&[Fractional], &[Fractional]), sin_impl));
+        fns.insert("cos", BuiltinFun::new("cos", (&[Fractional], &[Fractional]), cos_impl));
+        fns.insert("tan", BuiltinFun::new("tan", (&[Fractional], &[Fractional]), tan_impl));
 
         // Trigonometry - reciprocals
-        fns.insert("csc", BuiltinFun::new("csc", (&[Float64], &[Float64]), csc_impl));
-        fns.insert("sec", BuiltinFun::new("sec", (&[Float64], &[Float64]), sec_impl));
-        fns.insert("cot", BuiltinFun::new("cot", (&[Float64], &[Float64]), cot_impl));
+        fns.insert("csc", BuiltinFun::new("csc", (&[Fractional], &[Fractional]), csc_impl));
+        fns.insert("sec", BuiltinFun::new("sec", (&[Fractional], &[Fractional]), sec_impl));
+        fns.insert("cot", BuiltinFun::new("cot", (&[Fractional], &[Fractional]), cot_impl));
 
         // Trigonometry - principal inverses
-        fns.insert("arcsin", BuiltinFun::new("arcsin", (&[Float64], &[Float64]), arcsin_impl));
-        fns.insert("arccos", BuiltinFun::new("arccos", (&[Float64], &[Float64]), arccos_impl));
-        fns.insert("arctan", BuiltinFun::new("arctan", (&[Float64], &[Float64]), arctan_impl));
+        fns.insert("asin", BuiltinFun::new("asin", (&[Fractional], &[Fractional]), asin_impl));
+        fns.insert("acos", BuiltinFun::new("acos", (&[Fractional], &[Fractional]), acos_impl));
+        fns.insert("atan", BuiltinFun::new("atan", (&[Fractional], &[Fractional]), atan_impl));
 
         fns
     };
@@ -127,119 +127,133 @@ mod builtins {
 
     // Integer operations
     pub fn inc_impl(args: &[Value]) -> FunctionResult {
-        Scalar(Value::Int32(match args {
-            [Value::Int32(x)] => x + 1,
+        match args {
+            [Value::Int32(x)] => Scalar(Value::Int32(x + 1)),
             _ => unreachable!(),
-        }))
+        }
     }
     
     pub fn dec_impl(args: &[Value]) -> FunctionResult {
-        Scalar(Value::Int32(match args {
-            [Value::Int32(x)] => x - 1,
+        match args {
+            [Value::Int32(x)] => Scalar(Value::Int32(x - 1)),
             _ => unreachable!(),
-        }))
+        }
     }
 
     // Algebraic
     pub fn recip_impl(args: &[Value]) -> FunctionResult {
-        Scalar(Value::Float64(match args {
-            [Value::Float64(x)] => x.recip(),
+        match args {
+            [Value::Float32(x)] => Scalar(Value::Float32(x.recip())),
+            [Value::Float64(x)] => Scalar(Value::Float64(x.recip())),
             _ => unreachable!(),
-        }))
+        }
     }
     
     pub fn sqrt_impl(args: &[Value]) -> FunctionResult {
-        Scalar(Value::Float64(match args {
-            [Value::Float64(x)] => x.sqrt(),
+        match args {
+            [Value::Float32(x)] => Scalar(Value::Float32(x.sqrt())),
+            [Value::Float64(x)] => Scalar(Value::Float64(x.sqrt())),
             _ => unreachable!(),
-        }))
+        }
     }
     
     pub fn cbrt_impl(args: &[Value]) -> FunctionResult {
-        Scalar(Value::Float64(match args {
-            [Value::Float64(x)] => x.cbrt(),
+        match args {
+            [Value::Float32(x)] => Scalar(Value::Float32(x.cbrt())),
+            [Value::Float64(x)] => Scalar(Value::Float64(x.cbrt())),
             _ => unreachable!(),
-        }))
+        }
     }
 
     // Exponential & Logarithmic
     pub fn exp_impl(args: &[Value]) -> FunctionResult {
-        Scalar(Value::Float64(match args {
-            [Value::Float64(x)] => x.exp(),
+        match args {
+            [Value::Float32(x)] => Scalar(Value::Float32(x.exp())),
+            [Value::Float64(x)] => Scalar(Value::Float64(x.exp())),
             _ => unreachable!(),
-        }))
+        }
     }
     
     pub fn ln_impl(args: &[Value]) -> FunctionResult {
-        Scalar(Value::Float64(match args {
-            [Value::Float64(x)] => x.ln(),
+        match args {
+            [Value::Float32(x)] => Scalar(Value::Float32(x.ln())),
+            [Value::Float64(x)] => Scalar(Value::Float64(x.ln())),
             _ => unreachable!(),
-        }))
+        }
     }
 
     // Trigonometry
     pub fn sin_impl(args: &[Value]) -> FunctionResult {
-        Scalar(Value::Float64(match args {
-            [Value::Float64(x)] => x.sin(),
+        match args {
+            [Value::Float32(x)] => Scalar(Value::Float32(x.sin())),
+            [Value::Float64(x)] => Scalar(Value::Float64(x.sin())),
             _ => unreachable!(),
-        }))
+        }
     }
 
     pub fn cos_impl(args: &[Value]) -> FunctionResult {
-        Scalar(Value::Float64(match args {
-            [Value::Float64(x)] => x.cos(),
+        match args {
+            [Value::Float32(x)] => Scalar(Value::Float32(x.cos())),
+            [Value::Float64(x)] => Scalar(Value::Float64(x.cos())),
             _ => unreachable!(),
-        }))
+        }
     }
 
     pub fn tan_impl(args: &[Value]) -> FunctionResult {
-        Scalar(Value::Float64(match args {
-            [Value::Float64(x)] => x.tan(),
+        match args {
+            [Value::Float32(x)] => Scalar(Value::Float32(x.tan())),
+            [Value::Float64(x)] => Scalar(Value::Float64(x.tan())),
             _ => unreachable!(),
-        }))
+        }
     }
 
     // Trigonometry - reciprocals
     pub fn csc_impl(args: &[Value]) -> FunctionResult {
-        Scalar(Value::Float64(match args {
-            [Value::Float64(x)] => x.sin().recip(),
+        match args {
+            [Value::Float32(x)] => Scalar(Value::Float32(x.sin().recip())),
+            [Value::Float64(x)] => Scalar(Value::Float64(x.sin().recip())),
             _ => unreachable!(),
-        }))
+        }
     }
 
     pub fn sec_impl(args: &[Value]) -> FunctionResult {
-        Scalar(Value::Float64(match args {
-            [Value::Float64(x)] => x.cos().recip(),
+        match args {
+            [Value::Float32(x)] => Scalar(Value::Float32(x.cos().recip())),
+            [Value::Float64(x)] => Scalar(Value::Float64(x.cos().recip())),
             _ => unreachable!(),
-        }))
+        }
     }
 
     pub fn cot_impl(args: &[Value]) -> FunctionResult {
-        Scalar(Value::Float64(match args {
-            [Value::Float64(x)] => x.tan().recip(),
+        match args {
+            [Value::Float32(x)] => Scalar(Value::Float32(x.tan().recip())),
+            [Value::Float64(x)] => Scalar(Value::Float64(x.tan().recip())),
             _ => unreachable!(),
-        }))
+        }
     }
     
     // Trigonometry - principal inverses
-    pub fn arcsin_impl(args: &[Value]) -> FunctionResult {
-        Scalar(Value::Float64(match args {
-            [Value::Float64(x)] => x.asin(),
+    pub fn asin_impl(args: &[Value]) -> FunctionResult {
+        match args {
+            [Value::Float32(x)] => Scalar(Value::Float32(x.asin())),
+            [Value::Float64(x)] => Scalar(Value::Float64(x.asin())),
             _ => unreachable!(),
-        }))
+        }
     }
 
-    pub fn arccos_impl(args: &[Value]) -> FunctionResult {
-        Scalar(Value::Float64(match args {
-            [Value::Float64(x)] => x.acos(),
+    pub fn acos_impl(args: &[Value]) -> FunctionResult {
+        match args {
+            [Value::Float32(x)] => Scalar(Value::Float32(x.acos())),
+            [Value::Float64(x)] => Scalar(Value::Float64(x.acos())),
             _ => unreachable!(),
-        }))
+        }
     }
 
-    pub fn arctan_impl(args: &[Value]) -> FunctionResult {
-        Scalar(Value::Float64(match args {
-            [Value::Float64(x)] => x.atan(),
+    pub fn atan_impl(args: &[Value]) -> FunctionResult {
+        match args {
+            [Value::Float32(x)] => Scalar(Value::Float32(x.atan())),
+            [Value::Float64(x)] => Scalar(Value::Float64(x.atan())),
             _ => unreachable!(),
-        }))
+        }
     }
 }

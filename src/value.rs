@@ -29,6 +29,11 @@ pub enum Type {
 
     /// Specifically ``Float64``
     Float64,
+    
+    /// Any type that can represent an arbitrary real fraction
+    ///
+    /// Precision may be fixed, floating, or exact.
+    Fractional,
 }
 
 /// Represents a single value on the calculator stack
@@ -50,8 +55,8 @@ impl Value {
     pub fn matches(&self, candiate: &Type) -> bool {
         match self {
             Value::Int32(_) => *candiate == Type::Int32,
-            Value::Float32(_) => *candiate == Type::Float32,
-            Value::Float64(_) => *candiate == Type::Float64,
+            Value::Float32(_) => *candiate == Type::Float32 || *candiate == Type::Fractional,
+            Value::Float64(_) => *candiate == Type::Float64 || *candiate == Type::Fractional,
         }
     }
     
