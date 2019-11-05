@@ -17,32 +17,32 @@ lazy_static! {
         let mut fns = HashMap::new();
 
         // Integer operations
-        fns.insert("inc", BuiltinFun::new("inc", (&[AnyInt32], &[AnyInt32]), inc_impl));
-        fns.insert("dec", BuiltinFun::new("dec", (&[AnyInt32], &[AnyInt32]), dec_impl));
+        fns.insert("inc", BuiltinFun::new("inc", (&[Int32], &[Int32]), inc_impl));
+        fns.insert("dec", BuiltinFun::new("dec", (&[Int32], &[Int32]), dec_impl));
 
         // Algebraic
-        fns.insert("recip", BuiltinFun::new("recip", (&[AnyFloat64], &[AnyFloat64]), recip_impl));
-        fns.insert("sqrt", BuiltinFun::new("sqrt", (&[AnyFloat64], &[AnyFloat64]), sqrt_impl));
-        fns.insert("cbrt", BuiltinFun::new("cbrt", (&[AnyFloat64], &[AnyFloat64]), cbrt_impl));
+        fns.insert("recip", BuiltinFun::new("recip", (&[Float64], &[Float64]), recip_impl));
+        fns.insert("sqrt", BuiltinFun::new("sqrt", (&[Float64], &[Float64]), sqrt_impl));
+        fns.insert("cbrt", BuiltinFun::new("cbrt", (&[Float64], &[Float64]), cbrt_impl));
 
         // Exponential & Logarithmic
-        fns.insert("exp", BuiltinFun::new("exp", (&[AnyFloat64], &[AnyFloat64]), exp_impl));
-        fns.insert("ln",  BuiltinFun::new("ln",  (&[AnyFloat64], &[AnyFloat64]), ln_impl));
+        fns.insert("exp", BuiltinFun::new("exp", (&[Float64], &[Float64]), exp_impl));
+        fns.insert("ln",  BuiltinFun::new("ln",  (&[Float64], &[Float64]), ln_impl));
 
         // Trigonometry
-        fns.insert("sin", BuiltinFun::new("sin", (&[AnyFloat64], &[AnyFloat64]), sin_impl));
-        fns.insert("cos", BuiltinFun::new("cos", (&[AnyFloat64], &[AnyFloat64]), cos_impl));
-        fns.insert("tan", BuiltinFun::new("tan", (&[AnyFloat64], &[AnyFloat64]), tan_impl));
+        fns.insert("sin", BuiltinFun::new("sin", (&[Float64], &[Float64]), sin_impl));
+        fns.insert("cos", BuiltinFun::new("cos", (&[Float64], &[Float64]), cos_impl));
+        fns.insert("tan", BuiltinFun::new("tan", (&[Float64], &[Float64]), tan_impl));
 
         // Trigonometry - reciprocals
-        fns.insert("csc", BuiltinFun::new("csc", (&[AnyFloat64], &[AnyFloat64]), csc_impl));
-        fns.insert("sec", BuiltinFun::new("sec", (&[AnyFloat64], &[AnyFloat64]), sec_impl));
-        fns.insert("cot", BuiltinFun::new("cot", (&[AnyFloat64], &[AnyFloat64]), cot_impl));
+        fns.insert("csc", BuiltinFun::new("csc", (&[Float64], &[Float64]), csc_impl));
+        fns.insert("sec", BuiltinFun::new("sec", (&[Float64], &[Float64]), sec_impl));
+        fns.insert("cot", BuiltinFun::new("cot", (&[Float64], &[Float64]), cot_impl));
 
         // Trigonometry - principal inverses
-        fns.insert("arcsin", BuiltinFun::new("arcsin", (&[AnyFloat64], &[AnyFloat64]), arcsin_impl));
-        fns.insert("arccos", BuiltinFun::new("arccos", (&[AnyFloat64], &[AnyFloat64]), arccos_impl));
-        fns.insert("arctan", BuiltinFun::new("arctan", (&[AnyFloat64], &[AnyFloat64]), arctan_impl));
+        fns.insert("arcsin", BuiltinFun::new("arcsin", (&[Float64], &[Float64]), arcsin_impl));
+        fns.insert("arccos", BuiltinFun::new("arccos", (&[Float64], &[Float64]), arccos_impl));
+        fns.insert("arctan", BuiltinFun::new("arctan", (&[Float64], &[Float64]), arctan_impl));
 
         fns
     };

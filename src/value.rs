@@ -21,11 +21,11 @@ use std::fmt;
 /// generics.
 #[derive(Debug, PartialEq)]
 pub enum Type {
-    /// The most general ``Int32``
-    AnyInt32,
+    /// Specifically ``Int32``
+    Int32,
 
-    /// The most general ``Float64``
-    AnyFloat64,
+    /// Specifically ``Float64``
+    Float64,
 }
 
 /// Represents a single value on the calculator stack
@@ -42,12 +42,9 @@ impl Value {
     /// Returns ``true`` if the ``Value`` can be treated
     /// as the specified ``Type``.
     pub fn matches(&self, candiate: &Type) -> bool {
-        use Type::*;
-        use Value::*;
-
         match self {
-            Int32(_) => *candiate == AnyInt32,
-            Float64(_) => *candiate == AnyFloat64,
+            Value::Int32(_) => *candiate == Type::Int32,
+            Value::Float64(_) => *candiate == Type::Float64,
         }
     }
     
