@@ -16,14 +16,16 @@ use std::str::FromStr;
 lazy_static! {
     // The patterns that represent different value literals
     static ref VALUE_LITERALS: RegexSet = RegexSet::new(&[
+        r"^-?((\d+\.\d*)|(\d*\.\d+))f$", // Float32 literal
         r"^-?((\d+\.\d*)|(\d*\.\d+))$", // Float64 literal
         r"^-?\d+$",                     // Int32 literal
     ]).unwrap();
 }
 
 // The following are indices into the lazy static RegexSet above.
-const FLOAT64_LITERAL_IDX: usize = 0;
-const INT32_LITERAL_IDX: usize = 1;
+const FLOAT32_LITERAL_IDX: usize = 0;
+const FLOAT64_LITERAL_IDX: usize = 1;
+const INT32_LITERAL_IDX: usize = 2;
 
 /// The result of parsing a token
 #[derive(Debug, PartialEq)]
@@ -54,7 +56,9 @@ fn split_tokens(line: &str) -> impl Iterator<Item = &str> {
 fn analyze_token(token: &str) -> ParsedToken {
     let matches = VALUE_LITERALS.matches(token);
 
-    if matches.iter().any(|idx| idx == FLOAT64_LITERAL_IDX) {
+    if matches.iter().any(|idx| idx == FLOAT32_LITERAL_IDX) {
+        parse_float32(token)
+    } else if matches.iter().any(|idx| idx == FLOAT64_LITERAL_IDX) {
         parse_float64(token)
     } else if matches.iter().any(|idx| idx == INT32_LITERAL_IDX) {
         parse_int32(token)
@@ -64,6 +68,11 @@ fn analyze_token(token: &str) -> ParsedToken {
             None => ParsedToken::BadToken,
         }
     }
+}
+
+fn parse_float32(token: &str) -> ParsedToken {
+    let len = token.len();
+    ParsedToken::Literal(Value::Float32(f32::from_str(&token[..(len - 1)]).unwrap()))
 }
 
 fn parse_float64(token: &str) -> ParsedToken {

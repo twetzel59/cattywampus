@@ -24,6 +24,9 @@ pub enum Type {
     /// Specifically ``Int32``
     Int32,
 
+    /// Specifically ``Float32``
+    Float32,
+
     /// Specifically ``Float64``
     Float64,
 }
@@ -33,6 +36,9 @@ pub enum Type {
 pub enum Value {
     /// A 32-bit signed integer
     Int32(i32),
+
+    /// A 32-bit floating point number
+    Float32(f32),
 
     /// A 64-bit floating point number
     Float64(f64),
@@ -44,6 +50,7 @@ impl Value {
     pub fn matches(&self, candiate: &Type) -> bool {
         match self {
             Value::Int32(_) => *candiate == Type::Int32,
+            Value::Float32(_) => *candiate == Type::Float32,
             Value::Float64(_) => *candiate == Type::Float64,
         }
     }
@@ -53,6 +60,7 @@ impl Value {
     pub fn type_str(&self) -> &str {
         match self {
             Value::Int32(_) => "Int32",
+            Value::Float32(_) => "Float32",
             Value::Float64(_) => "Float64",
         }
     }
@@ -62,6 +70,7 @@ impl fmt::Display for Value {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Value::Int32(x) => write!(f, "{}", x),
+            Value::Float32(x) => write!(f, "{}", x),
             Value::Float64(x) => write!(f, "{}", x),
         }
     }
